@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import './RegisterPage.css';
 import firebaseConfig from '../firebaseConfig';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
