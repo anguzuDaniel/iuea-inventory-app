@@ -13,9 +13,9 @@ export function InventoryPageNavBar() {
     <Navbar
       variant="gradient"
       color="bg-light"
-      className="w-full mx-auto from-blue-gray-900 to-blue-gray-800"
+      className="w-full mx-auto from-blue-gray-900 to-blue-gray-800 radius-none border-0"
     >
-      <div className="flex flex-wrap items-center justify-between gap-y-4 text-white">
+      <div className="flex flex-wrap items-center justify-between gap-y-4 text-white radius-none">
         <Typography
           as="a"
           href="#"

@@ -28,7 +28,7 @@ const InventoryPage = () => {
   return (
     <div className='w-full'>
         <div className="flex relative w-full mx-auto bg-gray-200">
-          <div className="lg:w-1/4 w-full">
+          <div className="lg:w-1/4">
             <SideBar />
           </div>
 
@@ -36,10 +36,7 @@ const InventoryPage = () => {
             <InventoryPageNavBar />
 
             <div className='p-6 flex justify-center flex-col'>
-              <div className='flex justify-between py-6'>
-                <Typography variant="h5" color="blue-gray">
-                Filter Inventory
-                </Typography>
+              <div className='flex justify-between'>
 
                 <FilterItems  />
               </div>

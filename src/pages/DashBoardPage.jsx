@@ -14,7 +14,7 @@ function DashBoardPage() {
                 <SideBar />
             </div>
             
-            <div className="flex-1 mx-auto m-0 p-0 overflow-hidden visible w-auto float-right justify-center mx-50">
+            <div className="flex-1 mx-auto m-0 p-0 overflow-hidden visible w-auto float-right justify-center">
                 <DashBoardContent openModal={handleOpen}/>
             </div>
           </div>
