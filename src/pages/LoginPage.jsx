@@ -80,7 +80,7 @@ export function LoginPage() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <Link className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <Link to="/reset-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
                     Forgot password?
                   </Link>
                 </div>
