@@ -1,10 +1,16 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
+import React from 'react';
 import './index.css';
 import App from './App';
 import { FirebaseProvider } from './Context';
 
 import reportWebVitals from './reportWebVitals';
+
+// Add at the entry point of your application
+if (typeof process === 'undefined') {
+  const process = require('process');
+  global.process = process;
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

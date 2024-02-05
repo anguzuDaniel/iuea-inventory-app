@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 export const FirebaseContext = createContext();
 
@@ -15,9 +15,27 @@ export const FirebaseProvider = ({ children }) => {
     return () => unsubscribe();
   }, [auth]);
 
+  const login = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch(error) {
+      console.error('Login failed:', error.message);
+    }
+  }
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Login failed:', error.message);
+    }
+  }
+
   const contextValue = {
     user,
     auth,
+    login,
+    logout
   };
 
   return <FirebaseContext.Provider value={contextValue}>{children}</FirebaseContext.Provider>;

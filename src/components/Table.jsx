@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
@@ -19,6 +21,9 @@ import {
     IconButton,
     Tooltip,
   } from "@material-tailwind/react";
+  import { useFirebase } from "../Context";
+  import { getFirestore, collection, getDocs } from 'firebase/firestore';
+
    
   const TABS = [
     {
@@ -86,6 +91,26 @@ import {
   ];
    
   export function SortableTable({ openModal }) {
+    const { auth } = useFirebase();
+    const [inventoryData, setInventoryData] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      const fetchInventoryData = async () => {
+        try {
+          const db = getFirestore();
+          const inventoryCollection = collection(db, 'inventory');
+          const inventorySnapshot = await getDocs(inventoryCollection);
+          const data = inventorySnapshot.docs.map((doc) => doc.data());
+          setInventoryData(data);
+        } catch (error) {
+          console.error('Error fetching inventory data:', error);
+        }
+      };
+  
+      fetchInventoryData();
+    }, []);
+
     return (
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -103,7 +128,7 @@ import {
                 view all
               </Button>
               <Button className="flex items-center gap-3 bg-indigo-500" size="sm" onClick={openModal}>
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Inventory
               </Button>
             </div>
           </div>
@@ -149,32 +174,32 @@ import {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                ({ img, name, email, job, org, online, date }, index) => {
+              {inventoryData.map(
+                ({ imagePreview, itemName, itemStatus, price, quantity, dateOfAddition, addedBy }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
    
                   return (
-                    <tr key={name}>
+                    <tr key={itemName}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
-                          <Avatar src={img} alt={name} size="sm" />
+                          <Avatar src={imagePreview} alt={itemName} size="sm" />
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {name}
+                              {itemName}
                             </Typography>
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal opacity-70"
                             >
-                              {email}
+                              {addedBy}
                             </Typography>
                           </div>
                         </div>
@@ -186,25 +211,26 @@ import {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {job}
+                            {itemStatus}
                           </Typography>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            {org}
+                            {quantity}
                           </Typography>
                         </div>
                       </td>
                       <td className={classes}>
                         <div className="w-max">
-                          <Chip
-                            variant="ghost"
-                            size="sm"
-                            value={online ? "online" : "offline"}
-                            color={online ? "green" : "blue-gray"}
-                          />
+                        <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {price}
+                          </Typography>
                         </div>
                       </td>
                       <td className={classes}>
@@ -213,7 +239,7 @@ import {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {date}
+                          {dateOfAddition}
                         </Typography>
                       </td>
                       <td className={classes}>
