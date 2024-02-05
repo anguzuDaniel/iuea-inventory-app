@@ -9,17 +9,17 @@ function DashBoardPage() {
 
     return(
         <div className="w-full">
-            <div className="flex relative w-full mx-auto bg-gray-100">
+          <div className="flex relative w-full mx-auto bg-gray-100">
             <div className="lg:w-1/4">
                 <SideBar />
             </div>
             
-            <div className="flex-1 mx-auto m-0 p-0 overflow-hidden visible w-auto float-right justify-center">
+            <div className="flex-1 mx-auto m-0 p-0 overflow-hidden visible w-auto float-right justify-center mx-50">
                 <DashBoardContent openModal={handleOpen}/>
             </div>
-            </div>
+          </div>
 
-            { open && <div className="w-full h-full fixed top-0 left-0  z-50 bg-gray-600 bg-opacity-50 p-6 flex justify-center items-center"><AddInventoryPage closeModal={handleOpen}/></div> }
+          { open && <div className="w-full h-full fixed top-0 left-0  z-50 bg-gray-600 bg-opacity-50 p-6 p-8 flex justify-center items-center"><AddInventoryPage closeModal={handleOpen}/></div> }
         </div>
     );
 }

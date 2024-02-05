@@ -8,9 +8,9 @@ export function FilterItems({ onChange }) {
   };
 
   return (
-    <div className="w-72">
+    <div className="w-full">
       <Select
-        label="Filter"
+        label="Category"
         animate={{
           mount: { y: 0 },
           unmount: { y: 25 },
@@ -56,7 +56,7 @@ export function StatusOptions({ onChange }) {
   };
 
   return (
-    <div className="w-72">
+    <div className="w-full">
       <Select
         label="Filter"
         animate={{
