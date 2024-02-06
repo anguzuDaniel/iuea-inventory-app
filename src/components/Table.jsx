@@ -4,7 +4,7 @@ import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
   } from "@heroicons/react/24/outline";
-  import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+  import { PencilIcon, PlusIcon, UserPlusIcon } from "@heroicons/react/24/solid";
   import {
     Card,
     CardHeader,
@@ -128,7 +128,7 @@ import {
                 view all
               </Button>
               <Button className="flex items-center gap-3 bg-indigo-500" size="sm" onClick={openModal}>
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Inventory
+                <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add Inventory
               </Button>
             </div>
           </div>
