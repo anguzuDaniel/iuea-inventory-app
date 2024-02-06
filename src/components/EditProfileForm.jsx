@@ -39,11 +39,6 @@ export function EditProfileForm() {
       
       console.log('Profile updated successfully!');
       setMessage('Profile updated successfully!');
-      // Reset the form fields after submission
-      setFullName('');
-      setEmail('');
-      setBio('');
-      setUserImage('');
     } catch (error) {
       console.error('Error updating profile:', error.message);
       setMessage('Error updating profile. Please try again later.');
@@ -58,6 +53,7 @@ export function EditProfileForm() {
     // You can use Firebase Storage to upload the image
     // Here, we'll just set the user image URL directly
     setUserImage(URL.createObjectURL(file));
+
     // Update user profile data in Firestore
     try {
       const userDocRef = doc(db, 'users', user.uid);
