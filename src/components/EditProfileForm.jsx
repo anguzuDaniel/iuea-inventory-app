@@ -1,17 +1,20 @@
+import React, { useState, useEffect, useContext } from 'react';
 import { CameraIcon } from '@heroicons/react/24/outline';
 import { Button, Input, Spinner } from '@material-tailwind/react';
-import React, { useState } from 'react';
 import { useFirebase } from '../Context';
-import { collection, updateDoc, doc, setDoc } from 'firebase/firestore';
+import { collection, updateDoc, doc, setDoc, getDoc } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import firebaseConfig from '../firebaseConfig';
 import { initializeApp } from 'firebase/app';
 import Snackbar from './SnackBar';
+import { FirebaseContext } from '../Context';
+
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export function EditProfileForm() {
+const EditProfileForm = () => {
+  const { auth } = useContext(FirebaseContext);
   // State variables to hold user profile data
   const [fullName, setFullName] = useState('');
   const defaultUserImage = "https://i.stack.imgur.com/l60Hf.png";
@@ -21,6 +24,26 @@ export function EditProfileForm() {
   const { user, firestore } = useFirebase();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!auth.currentUser) return;
+      const uid = auth.currentUser.uid;
+      const userDocRef = doc(collection(getFirestore(), 'users'), uid);
+      try {
+        const userDocSnapshot = await getDoc(userDocRef);
+        if (userDocSnapshot.exists()) {
+          setUserProfile(userDocSnapshot.data());
+        } else {
+          console.log('User profile not found');
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+    fetchUserProfile();
+  }, [auth]);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -105,7 +128,7 @@ export function EditProfileForm() {
           <input
             type="text"
             id="fullName"
-            value={fullName}
+            value={fullName || userProfile?.fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder="Enter your full name"
             className="border border-gray-300 rounded-md py-2 px-3 w-full focus:outline-none focus:border-indigo-500"
@@ -118,7 +141,7 @@ export function EditProfileForm() {
           <input
             type="email"
             id="email"
-            value={email}
+            value={email || userProfile?.email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
             className="border border-gray-300 rounded-md py-2 px-3 w-full focus:outline-none focus:border-indigo-500"
@@ -130,7 +153,7 @@ export function EditProfileForm() {
           </label>
           <textarea
             id="bio"
-            value={bio}
+            value={bio || userProfile?.bio}
             onChange={(e) => setBio(e.target.value)}
             placeholder="Tell us something about yourself"
             className="border border-gray-300 rounded-md py-2 px-3 w-full h-32 resize-none focus:outline-none focus:border-indigo-500"

@@ -9,7 +9,6 @@ import { FirebaseProvider, useFirebase } from './Context';
 import { ForgotPasswordPage } from './pages/ForgotPassword';
 import { EditProfilePage } from './pages/EditProfilePage';
 
-
 const PrivateRoute = ({ element }) => {
   const navigate = useNavigate();
   const { user } = useFirebase();
