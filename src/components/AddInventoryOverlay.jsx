@@ -4,8 +4,7 @@ import {
   Button,
   Card,
   Typography,
-  Input,
-  Checkbox
+  Input
 } from "@material-tailwind/react";
 import { collection, addDoc } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';

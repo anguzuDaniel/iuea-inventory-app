@@ -7,6 +7,7 @@ import InventoryPage from './pages/InventoryPage';
 import DashBoardPage from './pages/DashBoardPage';
 import { FirebaseProvider, useFirebase } from './Context';
 import { ForgotPasswordPage } from './pages/ForgotPassword';
+import { EditProfilePage } from './pages/EditProfilePage';
 
 
 const PrivateRoute = ({ element }) => {
@@ -31,6 +32,8 @@ function AppRouter() {
               <Route path="/reset-password" element={<ForgotPasswordPage/>} />
               <Route path="/dashboard" element={<PrivateRoute element={<DashBoardPage />} />} />
               <Route path="/inventory" element={<PrivateRoute element={<InventoryPage />} />} />
+              <Route path="/edit-profile" element={<PrivateRoute element={<EditProfilePage />} />} />
+
           </Routes>
       </div>
     </Router>

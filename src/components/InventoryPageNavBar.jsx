@@ -32,24 +32,7 @@ export function InventoryPageNavBar() {
             <BellIcon className="h-4 w-4" />
           </IconButton>
         </div>
-        <div className="relative flex w-full gap-2 md:w-max">
-          <Input
-            type="search"
-            color="white"
-            label="Type here..."
-            className="pr-20"
-            containerProps={{
-              className: "min-w-[288px] outline-indigo-500",
-            }}
-          />
-          <Button
-            size="sm"
-            color="bg-indigo-500"
-            className="!absolute right-1 top-1 rounded"
-          >
-            Search
-          </Button>
-        </div>
+
       </div>
     </Navbar>
   );
