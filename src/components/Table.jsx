@@ -39,8 +39,22 @@ import {
       value: "unmonitored",
     },
   ];
+
+  const getStatusColorClass = (status) => {
+    switch (status) {
+      case 'Available':
+        return 'text-red-500';
+      case 'Out of Stock':
+        return 'text-indingo-500';
+      case 'Low Stock':
+        return 'text-green-500';
+      default:
+        return 'text-blue-gray-500';
+    }
+  };
+  
    
-  const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
+  const TABLE_HEAD = ["Name", "Status", "Price", "Quantity", "Date of creation", "Operations"];
    
   const TABLE_ROWS = [
     {
@@ -115,14 +129,10 @@ import {
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
-            <div>
-              <Typography variant="h5" color="blue-gray">
-                Inventory List
-              </Typography>
-              <Typography color="gray" className="mt-1 font-normal">
-                See information about all avialable inventory
-              </Typography>
-            </div>
+          <Input
+                label="Search"
+                icon={<MagnifyingGlassIcon className="h-5 w-5 focus-visible:outline-indigo-500" />}
+              />
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               <Button variant="outlined" size="sm">
                 view all
@@ -133,20 +143,8 @@ import {
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row text-indigo-500">
-            <Tabs value="all" className="w-full md:w-max">
-              <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value}>
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
             <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5 focus-visible:outline-indigo-500" />}
-              />
+
             </div>
           </div>
         </CardHeader>
@@ -180,6 +178,13 @@ import {
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
+
+                    const date = new Date(dateOfAddition);
+                    const formattedDate = date.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    });
    
                   return (
                     <tr key={itemName}>
@@ -209,11 +214,15 @@ import {
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal"
+                            className={`font-normal ${getStatusColorClass(itemStatus)}`}
                           >
                             {itemStatus}
                           </Typography>
-                          <Typography
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                        <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
@@ -239,7 +248,7 @@ import {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {dateOfAddition}
+                          {formattedDate}
                         </Typography>
                       </td>
                       <td className={classes}>
