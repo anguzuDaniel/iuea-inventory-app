@@ -152,8 +152,8 @@ export function SideBar() {
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
             </ListItemPrefix>
-            <Link to="/profile" className="transition duration-300">
-            Profile
+            <Link to="/edit-profile" className="transition duration-300">
+            Update Profile
             </Link>
           </ListItem>
           <ListItem>

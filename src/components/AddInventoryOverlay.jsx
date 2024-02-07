@@ -4,7 +4,8 @@ import {
   Button,
   Card,
   Typography,
-  Input
+  Input,
+  Spinner
 } from "@material-tailwind/react";
 import { collection, addDoc } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
@@ -12,6 +13,7 @@ import firebaseConfig from "../firebaseConfig";
 import { FirebaseContext } from '../Context';
 import { initializeApp } from "firebase/app";
 import { FilterItems, StatusOptions } from "./FilterItems";
+import Snackbar from "./SnackBar";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -48,6 +50,7 @@ export function AddInventoryPage({ closeModal }) {
     setIsloading(true);
 
     const inventoryItem = {
+      id: Math.random().toString(36).substr(2, 9),
       itemName,
       quantity,
       price,
@@ -74,6 +77,7 @@ export function AddInventoryPage({ closeModal }) {
   };
  
   return (
+    
     <Card color="white" shadow={false} className="p-10 lg:w-3/4 bg-white max-w-screen-lg h-full sm:w-full mx-auto">
       <Typography variant="h4" color="blue-gray">
         Add Inventory Item
@@ -97,6 +101,7 @@ export function AddInventoryPage({ closeModal }) {
                   className: "before:content-none after:content-none w-full",
                 }}
                 onChange={(e) => setItemName(e.target.value)}
+                required
               />
             </div>
 
@@ -121,6 +126,7 @@ export function AddInventoryPage({ closeModal }) {
                   className: "before:content-none after:content-none",
                 }}
                 onChange={(e) => setPrice(e.target.value)}
+                required
               />
             </div>
 
@@ -136,6 +142,7 @@ export function AddInventoryPage({ closeModal }) {
                   className: "before:content-none after:content-none",
                 }}
                 onChange={(e) => setQuantity(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -177,6 +184,9 @@ export function AddInventoryPage({ closeModal }) {
             />
           )}
 
+
+          { message && <div className="mb-6"><Snackbar message={message} /></div> }
+
           <div className="flex flex-row gap-2 mt-6 end">
             <Button
               variant="text"
@@ -187,13 +197,9 @@ export function AddInventoryPage({ closeModal }) {
               <span>Cancel</span>
             </Button>
             <Button className="flex items-center gap-3 bg-indigo-500" onClick={handleAddInventory}>
-              Add Inventory Item
+              {isloading ? <Spinner/> : <span>Add Inventory Item</span>}
             </Button>
           </div>
-
-          {/* <Typography color="gray" className="mt-4 text-center font-normal"> */}
-            {/* You can add a link to view all inventory items here */}
-          {/* </Typography> */}
         </div>
       </form>
       <Typography color="gray" className="mt-1 font-normal text-white">

@@ -32,7 +32,6 @@ function AppRouter() {
               <Route path="/dashboard" element={<PrivateRoute element={<DashBoardPage />} />} />
               <Route path="/inventory" element={<PrivateRoute element={<InventoryPage />} />} />
               <Route path="/edit-profile" element={<PrivateRoute element={<EditProfilePage />} />} />
-
           </Routes>
       </div>
     </Router>
